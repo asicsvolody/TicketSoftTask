@@ -10,6 +10,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Класс сущности
+ */
 public class User {
     private String name;
     private Set<String> eMails;

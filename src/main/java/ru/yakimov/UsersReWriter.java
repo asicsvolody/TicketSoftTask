@@ -16,14 +16,25 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+/**
+ * Класс с бизнес логикой
+ */
+
 public class UsersReWriter {
+
+
+    /**
+     * Главный метод класса.
+     * Читает данные из файли и перезаписывает
+     * в него обновлённые данные
+     * @param path
+     * @throws IOException
+     */
     public void rewriteSameUsers(Path path) throws IOException {
-
-
         List<User> userList = unionUsers(
                 getUsersFromFile(path)
         );
-
 
         Files.write(path,
                 getLinesFromUsersList(userList)
@@ -31,6 +42,13 @@ public class UsersReWriter {
 
     }
 
+
+    /**
+     * Метод возвращает коллекцию строк
+     * состаящих из данных User
+     * @param userList
+     * @return
+     */
     private List<String> getLinesFromUsersList(List<User> userList){
         return userList
                 .stream()
@@ -38,6 +56,13 @@ public class UsersReWriter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Метод осуществляет чтение данных из файла
+     * и перобразует их в экземпляры Unit
+     * @param path
+     * @return
+     * @throws IOException
+     */
     private List<User> getUsersFromFile(Path path) throws IOException {
         return Files.readAllLines(path)
                 .stream()
@@ -45,6 +70,13 @@ public class UsersReWriter {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Метод осуществляет объединение Users
+     * при наличии одинаковых e-mail
+     * @param userList
+     * @return
+     */
     private List<User> unionUsers(List<User> userList){
         Stack<User> stack = new Stack<>();
         stack.addAll(userList);
@@ -69,6 +101,12 @@ public class UsersReWriter {
     }
 
 
+    /**
+     * Метод преобразует строку с данными
+     * в экземпляр User
+     * @param line
+     * @return
+     */
     private User lineToUser(String line){
         String[] nameAndEmails = line.toLowerCase().split("->", 2);
         String userName = nameAndEmails[0].trim();
